@@ -48,17 +48,17 @@ export default function Profile() {
         {
             Header : "Date",
             accessor : "date",
-            Cell: (props) => moment(props.value).add(1, 'month').format("dddd, MMMM Do YYYY,")
+            Cell: (props) => moment(props.value).add('month').format("dddd, MMMM Do YYYY,")
         },
         {
             Header : "Check In",
             accessor : "checkIn",
-            Cell: (props) => moment(props.value).add(1, 'months').format("ddd, hA"),
+            Cell: (props) => moment(props.value).add('days').format("ddd, hA"),
         },
         {
             Header : "Check Out",
             accessor : "checkOut",
-            Cell: (props) => moment(props.value).add(1, 'days').format("ddd, hA"),
+            Cell: (props) => moment(props.value).add('days').format("ddd, hA"),
         },
     ]
     const columns = React.useMemo(columnFunction,[])

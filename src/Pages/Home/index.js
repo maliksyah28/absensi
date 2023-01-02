@@ -20,6 +20,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import QRCode from 'qrcode';
 import {QrReader}  from 'react-qr-reader';
 import axiosInstance from '../../services/axios';
+import { Link, Navigate } from "react-router-dom";
 
 export default function Home() {
   const [text, setText] = useState('');
@@ -101,11 +102,18 @@ export default function Home() {
             <Text color={'blue.400'} as={'span'}>
             Absent Daily
             </Text>{' '}
+            <Box
+        h="10"
+        cursor="pointer"
+        p="5"
+      >
+      </Box>
           </Heading>
           <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
             The project board is an exclusive absence. It's
             erfect for employee, agencies, and moonlighters.
           </Text>
+          <Link to="/login">Login</Link>
         </Stack>
       </Flex>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
