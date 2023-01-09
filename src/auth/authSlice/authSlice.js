@@ -4,7 +4,9 @@ const initialState = {
     NIK: 0,
     Username: "",
     RoleId: 0,
-    Token : ""
+    Token : "",
+    DepartmentId : 0,
+    defaultPassword : true
   };
 const authSlice = createSlice({
     name: "auth",
@@ -16,12 +18,16 @@ const authSlice = createSlice({
         state.Username = action.payload.Username;
         state.RoleId = action.payload.RoleId;
         state.Token = action.payload.Token
+        state.DepartmentId = action.payload.DepartmentId
+        state.defaultPassword = action.payload.defaultPassword
       },
       logout: (state) => {
         state.NIK= initialState.id;
         state.Username = initialState.Username;
         state.RoleId = initialState.RoleId
         state.Token = initialState.Token
+        state.DepartmentId = initialState.DepartmentId
+        state.defaultPassword = initialState.defaultPassword
       },
     },
 });

@@ -1,115 +1,148 @@
 import {
-    Flex,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    Checkbox,
-    Stack,
-    Link,
-    Button,
-    Heading,
-    Text,
-    useColorModeValue,
-  } from '@chakra-ui/react';
-  import {  Navigate } from "react-router-dom";
-  import { useDispatch, useSelector } from "react-redux";
-  import { login,logout } from '../../auth/authSlice/authSlice';
-  import { useState } from 'react';
-  import axiosInstance from '../../services/axios';
-  export default function Login() {
-    // let local = JSON.parse(localStorage.getItem('userInfo'))
-    // if (local.Token == false) { return <Navigate to="/" replace />}
-  
-    const [Uname,setUname] = useState('')
-    const [password,setPassword] = useState('')
-    const [RoleLogin,setRoleLogin] = useState('')
-    console.log(RoleLogin);
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
+import { Navigate, useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../../auth/authSlice/authSlice";
+import { useState } from "react";
+import axiosInstance from "../../services/axios";
+export default function Login() {
+  // let local = JSON.parse(localStorage.getItem('userInfo'))
+  // if (local.Token == false) { return <Navigate to="/" replace />}
+  const toast = useToast();
+  const navigate = useNavigate();
+  const [Uname, setUname] = useState("");
+  const [password, setPassword] = useState("");
+  const [RoleLogin, setRoleLogin] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  console.log(errorMessage);
+  const dispatch = useDispatch();
 
-    const dispatch =useDispatch()
+  const userNameHandleChange = (event) => {
+    setUname(event.target.value);
+  };
+  const passHandleChange = (event) => {
+    setPassword(event.target.value);
+  };
 
-    const userNameHandleChange = (event) => {
-      setUname(event.target.value)
+  const loginClick = async () => {
+    try {
+      const body = {
+        Username: Uname,
+        Password: password,
+      };
+      const res = await axiosInstance.post("api/login", body);
+
+      const user = res.data.data;
+      console.log(user);
+      setRoleLogin(res.data.data.Token);
+
+      const action = login(user);
+      dispatch(action);
+      const userInfo = {
+        NIK: user.nik,
+        Username: user.username,
+        RoleId: user.roleId,
+        Token: user.token,
+        DepartmentId: user.departmentId,
+        defaultPassword: user.defaultPassword
+      };
+      const strUser = JSON.stringify(userInfo);
+      localStorage.setItem("userInfo", strUser);
+      // if (res.error) {
+      //   setErrorMessage("")
+      // }
+      navigate("/HistoryAbsence");
+    } catch (error) {
+      console.log(error);
+      return toast({
+        title: "Account Not Found",
+        status: "error",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-    const passHandleChange = (event) => {
-      setPassword(event.target.value)
-    }
+  };
+  const userRole = useSelector((state) => state.auth.Token);
+  console.log(userRole);
 
-    const loginClick = async () => {
-      try {
-        const body ={
-          Username : Uname,
-          Password : password
-        }
-        const res = await axiosInstance.post('api/login',body)
-        console.log(res);
-        const user = res.data.data
-        setRoleLogin(res.data.data.roleId)
-       
-        const action = login(user)
-        dispatch(action)
-       const userInfo = {NIK : user.nik, Username : user.username, RoleId : user.roleId, Token : user.token }
-        const strUser = JSON.stringify(userInfo)
-        localStorage.setItem("userInfo",strUser)
-
-        
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    // if (RoleLogin == 1) {
-    //   return <Navigate to="/admin" replace />
-    // } 
-    // <Navigate to="/" replace />
-    // // console.log(local.RoleId);
-    return (
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
-            </Text>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
-            <Stack spacing={4}>
-              <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input type="text" value={Uname} onChange={userNameHandleChange} />
-              </FormControl>
-              <FormControl id="password">
-                <FormLabel>Password</FormLabel>
-                <Input type="password" value={password} onChange={passHandleChange} />
-              </FormControl>
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
-                </Stack>
-                <Button
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                  onClick={loginClick}>
-                  Sign in
-                </Button>
-              </Stack>
-            </Stack>
-          </Box>
+  // console.log(local.RoleId);
+  return (
+    <Flex minH={"100vh"} align={"center"} justify={"center"}>
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"}>Berca Sign in</Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
+            to see all of your absence ✌️
+          </Text>
         </Stack>
-      </Flex>
-    );
+        <Box
+          rounded={"lg"}
+          boxShadow={"lg"}
+          p={8}
+          bgGradient="linear-gradient(230deg, rgba(2,0,36,1) 0%, rgba(42,186,200,0.989233193277311) 49%, rgba(0,212,255,1) 100%)"
+        >
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel textColor={"whiteAlpha.900"}>Email address</FormLabel>
+              <Input
+                fontWeight={"semibold"}
+                type="text"
+                variant={"filled"}
+                value={Uname}
+                onChange={userNameHandleChange}
+              />
+            </FormControl>
+            <FormControl id="password" textColor={"whiteAlpha.900"}>
+              <FormLabel >Password</FormLabel>
+              <Input
+                textColor={"blackAlpha.900"}
+                variant={"filled"}
+                type="password"
+                value={password}
+                onChange={passHandleChange}
+              />
+            </FormControl>
+
+            <Stack spacing={10}>
+              <Text color={"red.400"} fontSize={"lg"} fontWeight={"semibold"}>
+                {errorMessage}
+              </Text>
+              <Stack
+                direction={{ base: "column", sm: "row" }}
+                align={"start"}
+                justify={"space-between"}
+              >
+                <Checkbox textColor={"whiteAlpha.900"}>Remember me</Checkbox>
+                <Button size={"xs"} w={"20"}> <Link to="/">Absence</Link></Button>
+                {/* <Link to="/">Absence</Link> */}
+              </Stack>
+              <Button
+                bg={"blue.400"}
+                color={"aliceblue"}
+                _hover={{
+                  bg: "blue.800",
+                }}
+                onClick={loginClick}
+              >
+                Sign in
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
+  );
 }

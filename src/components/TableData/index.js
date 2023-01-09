@@ -27,13 +27,14 @@ import {
     );
   return (
     <>
-      <TableContainer margin={4} border="2px" borderRadius="2xl">
+      <TableContainer margin={4} border="2px" borderRadius="2xl" borderColor={"gray.300"}>
         <Table
           size="sm"
-          bgColor="blackAlpha.100"
-          variant="striped"
-          colorScheme="blue"
-          color="black"
+          bgColor="whiteAlpha.900"
+          variant="simple"
+          colorScheme="#0f60e8"
+          color="#262626"
+          
           fontWeight="medium"
           {...getTableProps()}
         >
@@ -44,6 +45,8 @@ import {
                   <Th
                     key={i}
                     py="4"
+                    bg={"#0f60e8"}
+                    textColor={"whiteAlpha.900"}
                     fontSize="small"
                     textAlign="center"
                     {...column.getHeaderProps()}

@@ -1,7 +1,7 @@
 import { Flex, } from '@chakra-ui/react';
 import React, {useState, useRef, useEffect} from 'react';
 import { MdBuildCircle } from "react-icons/md";
-import { IconButton ,  useToast} from "@chakra-ui/react";
+import { IconButton ,  useToast,Button,Image, Text,Box,Heading, Divider} from "@chakra-ui/react";
 
 import Sidebar from '../../components/SideBar';
 import TableData from '../../components/TableData';
@@ -53,12 +53,14 @@ export default function Admin() {
         },
         {
             Header : "Gender",
-            accessor : "gender"
+            accessor : "gender",
+            Cell: (props) => { if(props.value == 0) { return "Man"} else {return"Woman"} }
+
         },
         {
             Header : "Birth Date",
             accessor : "birthDate",
-            Cell: (props) => moment(props.value).add(1, 'months').format('dddd, MMMM Do YYYY'),
+            Cell: (props) => moment(props.value).add('months').format('dddd, MMMM Do YYYY'),
         },
         {
             Header : "No. Phone",
@@ -77,11 +79,18 @@ export default function Admin() {
             Cell:({row: { original},
             }) => { 
                {
-              return ( <>  
-              <IconButton icon={MdBuildCircle} color="Black" onClick={() => deleteButt(original.nik)}>
-                tess
-              </IconButton>
-              <ModalForm idUpdate={original.nik}/>
+              return ( <> 
+                <Button color="Black" onClick={() => deleteButt(original.nik)}>
+                <Image width={4} height={4} src="delete.svg" alt="inventory" />
+                
+                </Button>
+                <Button color="Black" m={1} onClick={() => resPassword(original.nik,original.username)}>
+                <Image width={4} height={4} src="key.svg" alt="inventory" />
+                
+                </Button>   
+                
+              
+              <ModalForm idUpdate={original.nik} nama={original.name} address={original.address}/>
               
             </>)} }
           
@@ -97,6 +106,26 @@ export default function Admin() {
           console.log(error);
         }
     }
+
+    const resPassword = async (id,name) => {
+        try {
+            const body ={
+                NIK : id,
+                Username : name
+            }
+            const res= await axiosInstance.put('api/users/reset-password',body)
+            return toast({
+                title: res.data.message,
+                status: "success",
+                position: "top",
+                duration: 3000,
+                isClosable: true,
+              });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     //get localstorage datas
     let local = JSON.parse(localStorage.getItem('userInfo'))
@@ -106,8 +135,8 @@ export default function Admin() {
         <Flex justifyContent="center">
         <Sidebar/>
             <Flex width="85%" direction="column">
-                <ModalForm />
-                <TableData  columns={columns} data={dataUser}/>
+            <ModalForm />
+            <TableData  columns={columns} data={dataUser}/>
             </Flex>  
         </Flex>
             

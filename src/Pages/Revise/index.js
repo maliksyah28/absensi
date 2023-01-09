@@ -6,27 +6,27 @@ import { IconButton ,  useToast} from "@chakra-ui/react";
 import Sidebar from '../../components/SideBar';
 import TableData from '../../components/TableData';
 import ModalRevise from '../../components/ModalRevisi';
-import AlertPass from '../../components/AlertPass';
+import AlertDialogApp from '../../components/AlertDialogs';
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from '../../services/axios';
 import moment from 'moment';
-
-export default function Profile() {
+import AlertPass from '../../components/AlertPass';
+export default function Revise() {
     let local = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(local.NIK);
     const toast = useToast();
     const [listAbsenUser,setListAbsenUser] = useState([])
-    const fetchDataUser = async () => {
+    const fetchDataRevise = async () => {
         try {
-            const getUser =await axiosInstance.get(`api/attendances/${local.NIK}`)
+            const getUser =await axiosInstance.get(`api/attendances/revise/${local.DepartmentId}`)
             setListAbsenUser(getUser.data.data)
         } catch (error) {
             console.log(error);
         }
     }
     useEffect (()=> {
-        fetchDataUser()
+        fetchDataRevise()
     },[])
     // console.log(listAbsenUser);
 
@@ -38,7 +38,6 @@ export default function Profile() {
             Header : "NIK",
             accessor : "nik"
         },
-    
         {
             Header : "Name",
             accessor : "name"
@@ -74,40 +73,32 @@ export default function Profile() {
             Cell: (props) => props.value ? moment(props.value).add('days').format("LT") : null
         },
         {
+            Header : "Reason",
+            accessor : "reason"
+        }, 
+        {
+            Header : "Response status",
+            accessor : "responseStatus",
+            Cell: (props) => { if(props.value ==2) { return "Approved"} else if(props.value ==3){return"Reject"} else { return null}}
+        }, 
+        {
             Header : "Action",
             Cell:({row: { original},
             }) => { 
-               {
-              return ( <>  
-              <ModalRevise idAbsent={original.id} fetch={fetchDataUser}/>
-            </>)} }
+               if (original.responseStatus == 1) { return ( <>  
+                <AlertDialogApp idAbsent={original.id} fetch={fetchDataRevise} />
+              </>)} else {return null}
+              }
           
-        },
-        {
-            Header : "Response Request",
-            accessor : "responseStatus",
-            Cell: (props) => { if(props.value ==2) { return "Approved"} else if(props.value ==3){return"Rejected"} else if (props.value == 1){return "On Progress"} else { return null}}
-        }, 
+        }
     ]
     const columns = React.useMemo(columnFunction,[])
-    // const deleteButt = async (id)=> {
-    //     try {
-    //         const delRes = await axiosInstance.delete(`api/users/${id}`);
-    //         fetchDataUser()
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    // }
-    
-    //get localstorage datas
-    // let local = JSON.parse(localStorage.getItem('userInfo'))
-    // // console.log(local.RoleId);
-    // if (local.RoleId !== 1 ) { return <Navigate to="/" replace />}  ;
+   if (local.RoleId !== 2 ) { return <Navigate to="/" replace />}  ;
     return (
         <Flex justifyContent="center">
         <Sidebar/>
             <Flex width="85%" direction="column">
-                {local.defaultPassword ? (<><AlertPass/></>) : (null)}
+            {local.defaultPassword ? (<><AlertPass/></>) : (null)}
                 {/* <ModalForm /> */}
                 <TableData  columns={columns} data={dataUser}/>
             </Flex>  
