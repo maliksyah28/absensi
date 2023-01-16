@@ -106,7 +106,12 @@ export default function Sidebar() {
                 <Link to="/HistoryAbsence">History absence</Link>
               </Flex>
             </Box>
-            
+            <Box h="10" cursor="pointer" p="5" pt={6} textColor={"whiteAlpha.900"} fontSize={"large"} fontWeight={"semibold"}>
+              <Flex>
+              <Image mt={1} mr={2} width={6} height={6} src="profile.svg" alt="inventory" />
+                <Link to="/Profile">Profile</Link>
+              </Flex>
+            </Box>
 
             
 

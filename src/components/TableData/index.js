@@ -27,18 +27,18 @@ import {
     );
   return (
     <>
-      <TableContainer margin={4} border="2px" borderRadius="2xl" borderColor={"gray.300"}>
+      <TableContainer margin={4} border="2px" borderRadius="2xl" borderColor={"gray.300"} overflowY={"scroll"} height={"xl"}>
         <Table
           size="sm"
           bgColor="whiteAlpha.900"
           variant="simple"
           colorScheme="#0f60e8"
-          color="#262626"
+          color="#262626"   
           
           fontWeight="medium"
           {...getTableProps()}
-        >
-          <Thead>
+        > 
+          <Thead  position={"static"}  >
             {headerGroups.map((headerGroup, i) => (
               <Tr key={i} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, i) => (
@@ -58,7 +58,7 @@ import {
               </Tr>
             ))}
           </Thead>
-          <Tbody {...getTableBodyProps()}>
+          <Tbody {...getTableBodyProps()} overflow={"scroll"}>
             
             {rows.map((row, i) => {
               console.log(row);
@@ -75,6 +75,7 @@ import {
                         fontWeight="medium"
                         fontSize="13px"
                         textAlign="center"
+                       
                         {...cell.getCellProps()}
                       >
                         {cell.render('Cell')}

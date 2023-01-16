@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from '../../services/axios';
 import moment from 'moment';
 import AlertPass from '../../components/AlertPass';
+import SideNav from '../../components/SideBar/SideNav';
+
 export default function Revise() {
     let local = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(local.NIK);
@@ -95,9 +97,10 @@ export default function Revise() {
     const columns = React.useMemo(columnFunction,[])
    if (local.RoleId !== 2 ) { return <Navigate to="/" replace />}  ;
     return (
-        <Flex justifyContent="center">
-        <Sidebar/>
-            <Flex width="85%" direction="column">
+        <Flex >
+        {/* <Sidebar/> */}
+        <SideNav/>
+            <Flex width="95%" direction="column">
             {local.defaultPassword ? (<><AlertPass/></>) : (null)}
                 {/* <ModalForm /> */}
                 <TableData  columns={columns} data={dataUser}/>

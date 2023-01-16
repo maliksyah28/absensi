@@ -4,6 +4,7 @@ import { MdBuildCircle } from "react-icons/md";
 import { IconButton ,  useToast} from "@chakra-ui/react";
 
 import Sidebar from '../../components/SideBar';
+
 import TableData from '../../components/TableData';
 import ModalRevise from '../../components/ModalRevisi';
 import AlertPass from '../../components/AlertPass';
@@ -11,6 +12,8 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from '../../services/axios';
 import moment from 'moment';
+import SideNav from '../../components/SideBar/SideNav';
+
 
 export default function Profile() {
     let local = JSON.parse(localStorage.getItem('userInfo'))
@@ -104,9 +107,11 @@ export default function Profile() {
     // // console.log(local.RoleId);
     // if (local.RoleId !== 1 ) { return <Navigate to="/" replace />}  ;
     return (
-        <Flex justifyContent="center">
-        <Sidebar/>
-            <Flex width="85%" direction="column">
+        <Flex>
+        {/* <Sidebar/> */}
+        <SideNav/>
+        {/* <SimpleBar/> */}
+            <Flex width="95%" direction="column">
                 {local.defaultPassword ? (<><AlertPass/></>) : (null)}
                 {/* <ModalForm /> */}
                 <TableData  columns={columns} data={dataUser}/>

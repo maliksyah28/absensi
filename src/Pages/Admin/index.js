@@ -10,6 +10,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from '../../services/axios';
 import moment from 'moment';
+import SideNav from '../../components/SideBar/SideNav';
 export default function Admin() {
     
     const toast = useToast();
@@ -132,9 +133,10 @@ export default function Admin() {
     console.log(local.RoleId);
     if (local.RoleId !== 1 ) { return <Navigate to="/" replace />}  ;
     return (
-        <Flex justifyContent="center">
-        <Sidebar/>
-            <Flex width="85%" direction="column">
+        <Flex>
+        {/* <Sidebar/> */}
+        <SideNav/>
+            <Flex width={"95%"}  direction="column">
             <ModalForm />
             <TableData  columns={columns} data={dataUser}/>
             </Flex>  

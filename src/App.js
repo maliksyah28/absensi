@@ -12,6 +12,8 @@ import Admin from './Pages/Admin';
 import Profile from './Pages/Profile';
 import Revise from './Pages/Revise';
 import ManageDept from './Pages/ManageDept';
+import UserProfile from './Pages/User';
+import Testing from './Pages/Testing';
 function App() {
   const [isLocalStorageChecked, setisLocalStorageChecked] = useState(false);
   const dispatch = useDispatch();
@@ -44,6 +46,8 @@ function App() {
           <Route path='/HistoryAbsence' element={<Profile/>} />
           <Route path='/Revise' element={<Revise/>} />
           <Route path='/ManageDept' element={<ManageDept/>} />
+          <Route path='/profile' element={<UserProfile/>} />
+          <Route path='/test' element={<Testing/>}/>
         </Routes>
       </BrowserRouter>
     );

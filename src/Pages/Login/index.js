@@ -11,6 +11,8 @@ import {
   Text,
   useColorModeValue,
   useToast,
+  FormErrorMessage,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +28,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [RoleLogin, setRoleLogin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  console.log(errorMessage);
+  const isError = Uname === ''
+  const isError1 = password === ''
+  
   const dispatch = useDispatch();
 
   const userNameHandleChange = (event) => {
@@ -66,13 +70,13 @@ export default function Login() {
       navigate("/HistoryAbsence");
     } catch (error) {
       console.log(error);
-      return toast({
-        title: "Account Not Found",
-        status: "error",
-        position: "top",
-        duration: 3000,
-        isClosable: true,
-      });
+      // return toast({
+      //   title: "Account Not Found",
+      //   status: "error",
+      //   position: "top",
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
     }
   };
   const userRole = useSelector((state) => state.auth.Token);
@@ -95,7 +99,7 @@ export default function Login() {
           bgGradient="linear-gradient(230deg, rgba(2,0,36,1) 0%, rgba(42,186,200,0.989233193277311) 49%, rgba(0,212,255,1) 100%)"
         >
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="email" isInvalid={isError}>
               <FormLabel textColor={"whiteAlpha.900"}>Email address</FormLabel>
               <Input
                 fontWeight={"semibold"}
@@ -103,9 +107,14 @@ export default function Login() {
                 variant={"filled"}
                 value={Uname}
                 onChange={userNameHandleChange}
-              />
+              
+              /> {!isError ? (
+                <> </>
+              ) : (
+                <FormErrorMessage>Email is required.</FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl id="password" textColor={"whiteAlpha.900"}>
+            <FormControl id="password" textColor={"whiteAlpha.900"} isInvalid={isError1}>
               <FormLabel >Password</FormLabel>
               <Input
                 textColor={"blackAlpha.900"}
@@ -113,7 +122,12 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={passHandleChange}
-              />
+                required
+              />{!isError1 ? (
+                <> </>
+              ) : (
+                <FormErrorMessage>Password is required.</FormErrorMessage>
+              )}
             </FormControl>
 
             <Stack spacing={10}>

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../services/axios";
 import moment from "moment";
 import ModalDept from "../../components/ModalForm/ModalDept";
+import SideNav from "../../components/SideBar/SideNav";
+
 export default function ManageDept() {
   const toast = useToast();
   const [listUser, setListUser] = useState([]);
@@ -70,9 +72,10 @@ export default function ManageDept() {
     return <Navigate to="/" replace />;
   }
   return (
-    <Flex justifyContent="center">
-      <Sidebar />
-      <Flex width="85%" direction="column">
+    <Flex>
+      {/* <Sidebar /> */}
+      <SideNav/>
+      <Flex width="95%" direction="column">
         <ModalDept />
         <TableData columns={columns} data={dataUser} />
       </Flex>

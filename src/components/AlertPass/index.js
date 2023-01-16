@@ -1,11 +1,15 @@
 import { Alert, AlertIcon, useToast, Spacer, Button } from '@chakra-ui/react';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 function AlertPass(props) {
   const [isResendProcess, setisResendProcess] = useState(false);
 
   const toast = useToast();
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/profile");
+  };
 
 //   const onResendEmailClick = async () => {
 //     setisResendProcess(true);
@@ -38,7 +42,7 @@ function AlertPass(props) {
           loadingText="Mengirim"
           variant={'solid'}
           colorScheme="twitter"
-        //   onClick={onResendEmailClick}
+          onClick={onClick}
         >
           Click
         </Button>
