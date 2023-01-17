@@ -58,10 +58,18 @@ const changePass = async () => {
             Password : password
         }
         const res = await axiosInstance.put('api/users/update-password',body)
+        
         console.log(res);
             dispatch(logout());
             localStorage.removeItem("userInfo");
             navigate("/login");
+            return toast({
+              title: `PASSWORD Berhasil Di Update,Silahkan LOGIN Kembali`,
+              status: "success",
+              position: "top",
+              duration: 3000,
+              isClosable: true,
+            });    
     } catch (error) {
         console.log(error);
     }

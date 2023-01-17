@@ -55,7 +55,7 @@ export default function Admin() {
         {
             Header : "Gender",
             accessor : "gender",
-            Cell: (props) => { if(props.value == 0) { return "Man"} else {return"Woman"} }
+            Cell: (props) => { if(props.value == 0) { return "Male"} else {return"Female"} }
 
         },
         {

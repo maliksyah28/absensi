@@ -230,10 +230,9 @@ function ModalDept(props) {
                     placeholder="Department Name"
                     value={deptName}
                     onChange={(e) => {
-                      setDeptName({
-                        ...deptName,
-                        [e.target.name]: [e.target.value],
-                      });
+                      setDeptName(
+                       e.target.value
+                      );
                     }}
                   />
                 </>

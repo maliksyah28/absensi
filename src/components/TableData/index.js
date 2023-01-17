@@ -71,9 +71,9 @@ import {
                  
                       <Td
                         key={i}
-                        py="4"
+                        py="2"
                         fontWeight="medium"
-                        fontSize="13px"
+                        fontSize="15px"
                         textAlign="center"
                        
                         {...cell.getCellProps()}

@@ -94,13 +94,14 @@ export default function Login() {
         </Stack>
         <Box
           rounded={"lg"}
-          boxShadow={"lg"}
+          boxShadow={"dark-lg"}
           p={8}
-          bgGradient="linear-gradient(230deg, rgba(2,0,36,1) 0%, rgba(42,186,200,0.989233193277311) 49%, rgba(0,212,255,1) 100%)"
+          outlineColor={"GrayText"}
+          // bgGradient="linear-gradient(230deg, rgba(2,0,36,1) 0%, rgba(42,186,200,0.989233193277311) 49%, rgba(0,212,255,1) 100%)"
         >
           <Stack spacing={4}>
             <FormControl id="email" isInvalid={isError}>
-              <FormLabel textColor={"whiteAlpha.900"}>Email address</FormLabel>
+              <FormLabel textColor={"Gray.900"}>Email address</FormLabel>
               <Input
                 fontWeight={"semibold"}
                 type="text"
@@ -114,7 +115,7 @@ export default function Login() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl id="password" textColor={"whiteAlpha.900"} isInvalid={isError1}>
+            <FormControl id="password" textColor={"gray.900"} isInvalid={isError1}>
               <FormLabel >Password</FormLabel>
               <Input
                 textColor={"blackAlpha.900"}
@@ -131,7 +132,7 @@ export default function Login() {
             </FormControl>
 
             <Stack spacing={10}>
-              <Text color={"red.400"} fontSize={"lg"} fontWeight={"semibold"}>
+              <Text color={"red.900"} fontSize={"lg"} fontWeight={"semibold"}>
                 {errorMessage}
               </Text>
               <Stack
@@ -139,7 +140,7 @@ export default function Login() {
                 align={"start"}
                 justify={"space-between"}
               >
-                <Checkbox textColor={"whiteAlpha.900"}>Remember me</Checkbox>
+                <Checkbox textColor={"Grey.900"}>Remember me</Checkbox>
                 <Button size={"xs"} w={"20"}> <Link to="/">Absence</Link></Button>
                 {/* <Link to="/">Absence</Link> */}
               </Stack>
